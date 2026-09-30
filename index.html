@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>dag.design – möbler och inredningsdetaljer av Dag Lindberg</title>
+<meta name="description" content="Svensk designstudio av Dag Lindberg. Hantverksmässiga möbler och inredningsdetaljer med fokus på estetik, funktion och kvalitet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<!--
+DESIGN
+Känsla: en arkitekts ritbord. Lugn, luftig, exakt – som en ritning innan den blir ett föremål.
+Typ: Jost (geometrisk, arkitektonisk). Lätt vikt och gemener för rubriker, i linje med Dags egen stil ("gravitation. balans. rörelse.", produktkoder som d1, m1, s1).
+Färg: Papper #F4F4F1, Linne #E9E8E3, Grafit #1D1D1B, Blyerts #77776F, Preussiskt blått #25406B (måttlinjer – etsningsbläck från mammas grafiska verkstad), Ek #A7814F (sparsamt).
+Motiv: måttsättning. Varje produkt visas som en ritning med måttlinjer. Riktiga produktbilder läggs i PRODUCTS[].img och ersätter då ritningen.
+Rörelse: en orkestrerad stund – heroritningen ritas upp. Resten svarar på handling.
+-->
+<style>
+:root{
+  --paper:#F4F4F1; --linen:#E9E8E3; --ink:#1D1D1B; --graphite:#77776F; --blue:#25406B; --oak:#A7814F;
+  --line:rgba(29,29,27,.12); --line2:rgba(29,29,27,.22);
+  --pad:clamp(20px,4.5vw,64px); --max:1440px; --head:76px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#151514;--linen:#1E1E1C;--ink:#ECEBE6;--graphite:#9A9A92;--blue:#8FA8D4;--oak:#C49A66;--line:rgba(236,235,230,.12);--line2:rgba(236,235,230,.24)}
+}
+:root[data-theme="dark"]{--paper:#151514;--linen:#1E1E1C;--ink:#ECEBE6;--graphite:#9A9A92;--blue:#8FA8D4;--oak:#C49A66;--line:rgba(236,235,230,.12);--line2:rgba(236,235,230,.24)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--head) + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Jost","Futura","Avenir Next","Century Gothic",system-ui,sans-serif;font-weight:400;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:1.5px solid var(--blue);outline-offset:4px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.label{font-size:13px;letter-spacing:.02em;color:var(--graphite)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;height:54px;padding:0 28px;font-size:15px;font-weight:500;border:1px solid var(--ink);transition:background .25s,color .25s,border-color .25s}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:transparent;color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.btn svg{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.btn:hover svg{transform:translateX(4px)}
+.ulink{background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:3px;transition:background-size .4s cubic-bezier(.2,.7,.2,1)}
+.ulink:hover{background-size:0 1px;background-position:100% 100%}
+
+/* Ritningar */
+.dwg{width:100%;height:100%;overflow:visible}
+.dwg .o{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.dwg .f{fill:var(--paper);stroke:var(--ink);stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.dwg .h{fill:none;stroke:var(--ink);stroke-width:.7;opacity:.45;vector-effect:non-scaling-stroke}
+.dwg .g{fill:none;stroke:var(--graphite);stroke-width:.8;opacity:.6;vector-effect:non-scaling-stroke}
+.dwg .m{fill:none;stroke:var(--blue);stroke-width:.9;vector-effect:non-scaling-stroke}
+.dwg .mt{fill:var(--blue);font-family:inherit;font-size:11px;letter-spacing:.04em}
+.dwg .gr{stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke}
+
+/* ---------- Header ---------- */
+.head{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+.head.scrolled{background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.head-in{height:var(--head);display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.brand{font-size:26px;font-weight:500;letter-spacing:-.02em;justify-self:start}
+.brand span{color:var(--blue)}
+.nav{display:flex;gap:40px;font-size:15px}
+.nav a{opacity:.72;transition:opacity .2s}
+.nav a:hover{opacity:1}
+.head-r{justify-self:end;display:flex;align-items:center;gap:22px;font-size:15px}
+.cart-btn{display:flex;align-items:center;gap:10px}
+.cart-count{min-width:24px;height:24px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:12px;border-radius:12px;padding:0 7px;transition:background .25s,color .25s}
+.cart-count.has{background:var(--ink);color:var(--paper)}
+.cart-count.bump{animation:bump .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes bump{40%{transform:scale(1.25)}}
+.menu-btn{display:none;width:44px;height:44px;position:relative}
+.menu-btn i{position:absolute;left:11px;right:11px;height:1.5px;background:var(--ink);transition:transform .35s cubic-bezier(.7,0,.2,1)}
+.menu-btn i:nth-child(1){top:18px}.menu-btn i:nth-child(2){top:25px}
+.menu-open .menu-btn i:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+.menu-open .menu-btn i:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+.mmenu{display:none}
+
+/* ---------- Hero ---------- */
+.hero>.wrap{width:100%}
+.hero{min-height:100svh;display:flex;flex-direction:column;padding-top:calc(var(--head) + env(safe-area-inset-top,0px))}
+.hero-grid{flex:1;display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,60px);align-items:center;padding-top:clamp(20px,4vh,60px);padding-bottom:clamp(20px,4vh,60px)}
+.hero h1{margin:0;font-weight:300;font-size:clamp(56px,8.2vw,138px);line-height:.98;letter-spacing:-.035em}
+.hero h1 span{display:block;overflow:hidden}
+.hero h1 span i{display:block;font-style:normal;transform:translateY(102%);animation:rise 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 span:nth-child(2) i{animation-delay:.14s}
+.hero h1 span:nth-child(3) i{animation-delay:.28s}
+@keyframes rise{to{transform:none}}
+.hero-draw{position:relative;aspect-ratio:4/3;overflow:visible}
+.hero-draw .ph{inset:0;width:100%;height:100%}
+.hero-draw .draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.2s .5s cubic-bezier(.6,0,.2,1) forwards}
+.hero-draw .late{opacity:0;animation:fade .8s 2.3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.hero-tag{position:absolute;right:0;bottom:-34px;z-index:2;display:flex;gap:18px;align-items:baseline;font-size:15px;opacity:0;animation:fade .8s 2.6s forwards}
+.hero-tag b{font-weight:500}
+.hero-foot{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,60px);align-items:end;padding-bottom:clamp(28px,5vh,56px);border-top:1px solid var(--line);padding-top:28px;opacity:0;animation:fade .9s 1s forwards}
+.hero-foot p{margin:0;max-width:420px;font-size:18px;line-height:1.55}
+.hero-foot-r{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.scroll-cue{display:flex;align-items:center;gap:12px}
+.scroll-cue i{width:1px;height:38px;background:var(--line2);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--ink);animation:cue 2.2s 3s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes cue{to{top:100%}}
+
+/* ---------- Manifest ---------- */
+.manifest{padding:clamp(100px,14vw,200px) 0}
+.manifest p{margin:0;font-weight:300;font-size:clamp(28px,3.6vw,56px);line-height:1.2;letter-spacing:-.02em;max-width:22ch}
+.manifest-row{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,60px)}
+.manifest .label{padding-top:14px}
+
+/* ---------- Kollektion ---------- */
+.coll-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:44px;flex-wrap:wrap}
+.coll-head h2{margin:0;font-weight:300;font-size:clamp(40px,5vw,80px);letter-spacing:-.03em;line-height:1}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filter{height:40px;padding:0 16px;border:1px solid var(--line2);font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:background .2s,color .2s,border-color .2s}
+.filter sup{font-size:10px;color:var(--graphite);transition:color .2s}
+.filter:hover{border-color:var(--ink)}
+.filter[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filter[aria-pressed="true"] sup{color:inherit;opacity:.6}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.card{position:relative;min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;transition:opacity .4s,transform .4s}
+.card.hide{display:none}
+.card-open{display:block;text-align:left;width:100%}
+.card-media{position:relative;aspect-ratio:1/1;padding:14%;isolation:isolate;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-media .dwg{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card-code{position:absolute;top:22px;left:24px;font-size:15px;font-weight:500}
+.card-view{position:absolute;top:22px;right:24px;font-size:13px;color:var(--graphite);opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s}
+.card-info{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px 22px;border-top:1px solid var(--line)}
+.card-info h3{margin:0;font-size:17px;font-weight:400}
+.card-info .price{font-size:15px;color:var(--graphite);white-space:nowrap}
+.card-add{position:absolute;right:20px;bottom:74px;width:46px;height:46px;border:1px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s,background .2s,color .2s;z-index:2}
+.card-add:hover{background:var(--ink);color:var(--paper)}
+.card-add.done{background:var(--ink);color:var(--paper);opacity:1;transform:none}
+.card.wide{grid-column:span 2}
+.card.wide .card-media{aspect-ratio:2/1;padding:6% 18%}
+
+/* ---------- Spotlight ---------- */
+.spot{padding:clamp(100px,13vw,190px) 0}
+.spot-grid{display:grid;grid-template-columns:7fr 5fr;gap:clamp(30px,5vw,80px);align-items:center}
+.spot-draw{background:var(--linen);aspect-ratio:5/4;padding:8%;position:relative;overflow:hidden}
+.spot-draw .m,.spot-draw .mt{opacity:0;transition:opacity .6s}
+.spot-draw.show-dwg .m,.spot-draw.show-dwg .mt{opacity:1;transition-delay:.9s}
+.spot-draw .draw{stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 1.6s cubic-bezier(.6,0,.2,1)}
+.spot-draw.show-dwg .draw{stroke-dashoffset:0}
+.spot-corner{position:absolute;left:16px;top:14px;font-size:13px;color:var(--ink);background:var(--paper);padding:5px 10px}
+.spot h2{margin:0 0 8px;font-weight:300;font-size:clamp(60px,8vw,130px);letter-spacing:-.04em;line-height:.9}
+.spot .sub{font-size:20px;margin:0 0 30px}
+.spot p{margin:0 0 34px;color:var(--graphite);max-width:430px}
+.spot-meta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-bottom:34px}
+.spot-meta div{padding:16px 0;border-bottom:1px solid var(--line)}
+.spot-meta div:nth-child(odd){padding-right:16px}
+.spot-meta div:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
+.spot-meta b{display:block;font-weight:400;font-size:18px}
+
+/* ---------- Principer ---------- */
+.princ{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.pr{padding:40px clamp(20px,3vw,44px) 50px 0}
+.pr+.pr{padding-left:clamp(20px,3vw,44px);border-left:1px solid var(--line)}
+.pr svg{width:100%;height:150px;margin-bottom:34px;overflow:visible}
+.pr h3{margin:0 0 10px;font-weight:300;font-size:clamp(30px,2.8vw,44px);letter-spacing:-.02em}
+.pr p{margin:0;color:var(--graphite);max-width:34ch}
+.pr .ball{transform-box:view-box;transition:transform 1.2s cubic-bezier(.5,0,.2,1)}
+.pr .beam{transform-box:view-box;transform-origin:150px 98px;transition:transform 1.4s cubic-bezier(.3,1.6,.4,1)}
+.princ.in .ball{transform:translateY(62px)}
+.pr svg{display:block}
+.princ.in .beam{transform:rotate(0deg)!important}
+.pr .wave{stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 2s .3s cubic-bezier(.6,0,.2,1)}
+.princ.in .wave{stroke-dashoffset:0}
+
+/* ---------- Om Dag ---------- */
+.about{background:var(--linen);padding:clamp(100px,13vw,190px) 0}
+.about-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(30px,5vw,80px)}
+.about-l{position:sticky;top:calc(var(--head) + 40px);align-self:start}
+.about h2{margin:0 0 30px;font-weight:300;font-size:clamp(48px,6vw,96px);letter-spacing:-.035em;line-height:.95}
+.portrait{aspect-ratio:9/10;background:var(--paper);position:relative;overflow:hidden;max-width:440px}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;animation:fade 1s forwards;opacity:0}
+.portrait-empty{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:24px}
+.portrait-empty .sig{font-size:clamp(40px,4vw,60px);font-weight:300;letter-spacing:-.03em;line-height:1}
+.about-r .lead{margin:0 0 40px;font-weight:300;font-size:clamp(24px,2.4vw,36px);line-height:1.3;letter-spacing:-.015em}
+.about-r p{margin:0 0 22px;max-width:62ch;color:color-mix(in srgb,var(--ink) 82%,transparent)}
+.quote{margin:60px 0;padding:34px 0;border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);font-weight:300;font-size:clamp(22px,2.2vw,32px);line-height:1.35;letter-spacing:-.01em}
+.quote cite{display:block;margin-top:18px;font-style:normal;font-size:14px;color:var(--graphite);letter-spacing:0}
+.timeline{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line2)}
+.timeline div{padding:22px 0}
+.timeline div+div{padding-left:24px;border-left:1px solid var(--line2)}
+.timeline b{display:block;font-weight:300;font-size:clamp(40px,4vw,60px);letter-spacing:-.03em;line-height:1;margin-bottom:10px}
+.timeline span{color:var(--graphite);font-size:15px}
+
+/* ---------- Nyhetsbrev + footer ---------- */
+.news{padding:clamp(90px,12vw,170px) 0}
+.news-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,60px);align-items:end}
+.news h2{margin:0;font-weight:300;font-size:clamp(38px,4.4vw,68px);letter-spacing:-.03em;line-height:1}
+.news form{display:flex;border-bottom:1px solid var(--ink);align-items:center}
+.news input{flex:1;min-width:0;height:64px;border:0;background:transparent;font:inherit;font-size:20px;font-weight:300;color:var(--ink);outline:none}
+.news input::placeholder{color:var(--graphite)}
+.news-msg{margin:14px 0 0;font-size:14px;color:var(--graphite);min-height:1.5em}
+footer{border-top:1px solid var(--line);padding:50px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+.foot{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,60px)}
+.foot-brand{font-size:clamp(90px,14vw,220px);font-weight:300;letter-spacing:-.06em;line-height:.8;margin:0}
+.foot-brand span{color:var(--blue)}
+.foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;align-content:start}
+.foot-cols h4{margin:0 0 14px;font-size:13px;font-weight:400;color:var(--graphite)}
+.foot-cols ul{list-style:none;margin:0;padding:0;font-size:15px;line-height:2}
+.foot-cols a{opacity:.8}
+.foot-cols a:hover{opacity:1}
+.foot-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:60px;font-size:13px;color:var(--graphite);flex-wrap:wrap}
+
+/* ---------- Produktvy ---------- */
+.overlay{position:fixed;inset:0;z-index:80;background:rgba(15,15,14,.38);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.overlay.on{opacity:1;visibility:visible}
+.pv{position:fixed;z-index:90;inset:0;display:flex;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));visibility:hidden;pointer-events:none}
+.pv.on{visibility:visible}
+.pv-box{pointer-events:auto;background:var(--paper);width:min(1180px,100%);max-height:100%;display:grid;grid-template-columns:7fr 5fr;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.pv.on .pv-box{opacity:1;transform:none}
+.pv-media{background:var(--linen);position:relative;padding:10%;display:flex;align-items:center;justify-content:center;min-height:520px;overflow:hidden}
+.pv-media>.dwg{position:relative;z-index:0}
+.pv-media .label{position:absolute;left:16px;top:14px;background:var(--paper);color:var(--ink);padding:5px 10px}
+.pv-info{padding:clamp(28px,3.5vw,50px);display:flex;flex-direction:column;overflow:auto}
+.pv-close{align-self:flex-end;width:44px;height:44px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;margin:-10px -10px 20px 0;transition:border-color .2s}
+.pv-close:hover{border-color:var(--ink)}
+.pv-info .code{font-size:15px;font-weight:500;color:var(--blue)}
+.pv-info h3{margin:6px 0 10px;font-weight:300;font-size:clamp(36px,3.4vw,52px);letter-spacing:-.03em;line-height:1}
+.pv-info .price{font-size:20px;margin:0 0 26px}
+.pv-info .desc{margin:0 0 30px;color:var(--graphite)}
+.buy{display:flex;gap:10px;margin-bottom:30px}
+.qty{display:flex;border:1px solid var(--line2);height:54px}
+.qty button{width:44px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.qty span{width:30px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.buy .btn{flex:1}
+.acc{border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;padding:16px 0;display:flex;justify-content:space-between;cursor:pointer;font-size:15px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font-size:18px;line-height:1;transition:transform .3s}
+.acc details[open] summary::after{transform:rotate(45deg)}
+.acc p{margin:0 0 18px;font-size:15px;color:var(--graphite)}
+
+/* ---------- Varukorg ---------- */
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:95;width:min(460px,100%);background:var(--paper);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .55s cubic-bezier(.7,0,.2,1);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.on{transform:none}
+.dr-head{display:flex;justify-content:space-between;align-items:center;padding:0 28px;height:var(--head);border-bottom:1px solid var(--line)}
+.dr-head h3{margin:0;font-weight:400;font-size:17px}
+.dr-list{flex:1;overflow:auto;padding:8px 28px}
+.dr-item{display:grid;grid-template-columns:84px 1fr auto;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);align-items:center}
+.dr-thumb{aspect-ratio:1;background:var(--linen);padding:12%;position:relative;overflow:hidden}
+
+.dr-item h4{margin:0;font-weight:400;font-size:16px}
+.dr-item .label{display:block;margin-bottom:10px}
+.dr-qty{display:inline-flex;border:1px solid var(--line2);height:34px}
+.dr-qty button{width:32px}
+.dr-qty span{width:24px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.dr-rm{font-size:13px;color:var(--graphite);margin-top:8px;display:block}
+.dr-rm:hover{color:var(--ink)}
+.dr-price{font-size:15px;align-self:start}
+.dr-empty{padding:60px 0;text-align:center}
+.dr-empty p{margin:0 0 24px;color:var(--graphite)}
+.dr-foot{padding:24px 28px 28px;border-top:1px solid var(--line)}
+.dr-sum{display:flex;justify-content:space-between;font-size:18px;margin-bottom:6px}
+.dr-foot .label{display:block;margin-bottom:20px}
+.dr-foot .btn{width:100%}
+.dr-note{margin:12px 0 0;font-size:13px;color:var(--graphite);min-height:1.4em;text-align:center}
+
+/* Foto + ritning */
+.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.ph.contain{object-fit:cover}
+.has-img{background:var(--linen)}
+.card-media .card-code,.card-media .card-view{z-index:2}
+.card-media .card-view{background:var(--paper);padding:2px 8px}
+.show-dwg .ph{opacity:0}
+.vt{position:absolute;right:16px;top:14px;z-index:3;display:flex;border:1px solid var(--line2);background:var(--paper)}
+.vt button{height:32px;padding:0 12px;font-size:13px;color:var(--graphite);transition:background .2s,color .2s}
+.vt button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.hero-draw .ph{opacity:0;transform:scale(1.04);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 2.4s cubic-bezier(.2,.7,.2,1)}
+.hero-draw.photo .ph{opacity:1;transform:none}
+.hero-draw .dwg{transition:opacity .8s}
+.hero-draw.photo .dwg{opacity:0}
+.spot-draw .ph{opacity:1;transform:scale(1.06);transition:opacity .6s,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.spot.in .spot-draw .ph{transform:none}
+.spot-draw.show-dwg .ph{opacity:0}
+.variants{display:flex;flex-direction:column;gap:6px;margin:-6px 0 26px}
+.variant{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 16px;border:1px solid var(--line2);font-size:15px;transition:border-color .2s,background .2s}
+.variant:hover{border-color:var(--ink)}
+.variant[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.variant span:last-child{color:var(--graphite)}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (hover:hover){
+  .card:hover .card-media .dwg{transform:scale(1.04)}
+  .card:hover .has-img .ph{transform:scale(1.035)}
+  .card:hover .card-view{opacity:1;transform:none}
+  .card:hover .card-add{opacity:1;transform:none}
+}
+
+/* ================= Surfplatta ================= */
+@media (max-width:1024px){
+  .nav{display:none}
+  .head-in{grid-template-columns:1fr auto}
+  .menu-btn{display:block}
+  .mmenu{display:flex;flex-direction:column;position:fixed;inset:0;z-index:45;background:var(--paper);padding:calc(var(--head) + 30px + env(safe-area-inset-top,0px)) var(--pad) calc(30px + env(safe-area-inset-bottom,0px));clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .6s cubic-bezier(.7,0,.2,1),visibility .6s}
+  .menu-open .mmenu{clip-path:inset(0);visibility:visible}
+  .mmenu ul{list-style:none;margin:0;padding:0}
+  .mmenu li{overflow:hidden;border-bottom:1px solid var(--line)}
+  .mmenu li a{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;font-weight:300;font-size:clamp(40px,11vw,64px);letter-spacing:-.03em;line-height:1.05;transform:translateY(100%);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+  .mmenu li a small{font-size:14px;color:var(--graphite);letter-spacing:0}
+  .menu-open .mmenu li a{transform:none}
+  .menu-open .mmenu li:nth-child(2) a{transition-delay:.06s}
+  .menu-open .mmenu li:nth-child(3) a{transition-delay:.12s}
+  .mmenu-foot{margin-top:auto;color:var(--graphite);font-size:14px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:dense}
+  .card.wide{grid-column:span 2}
+}
+
+/* ================= Mobil ================= */
+@media (max-width:760px){
+  :root{--head:64px}
+  body{font-size:16px}
+  .brand{font-size:23px}
+  .head-r{gap:10px}
+  .cart-btn .t{display:none}
+  .hero-grid{grid-template-columns:minmax(0,1fr);align-content:center;gap:10px;padding-top:12px}
+  .hero h1{font-size:clamp(50px,15.5vw,88px)}
+  .hero-draw{order:-1;aspect-ratio:4/3;margin:0 -8px}
+  .hero-tag{position:static;margin-top:4px;justify-content:flex-end;font-size:14px}
+  .hero-foot{grid-template-columns:minmax(0,1fr);gap:22px;padding-top:22px}
+  .hero-foot p{font-size:16px}
+  .hero-foot-r .btn{flex:1}
+  .scroll-cue{display:none}
+  .manifest{padding:90px 0}
+  .manifest-row{grid-template-columns:minmax(0,1fr);gap:20px}
+  .manifest .label{padding-top:0}
+  .coll-head{margin-bottom:26px;gap:20px}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin:0 calc(var(--pad)*-1);padding:0 var(--pad);scrollbar-width:none;width:calc(100% + var(--pad)*2)}
+  .filters::-webkit-scrollbar{display:none}
+  .filter{flex:none}
+  .grid{margin:0 calc(var(--pad)*-1);border-left:0}
+  .card:nth-child(odd){border-left:0}
+  .card-media{padding:12%}
+  .card-code{top:14px;left:14px;font-size:14px}
+  .card-info{flex-direction:column;align-items:flex-start;gap:2px;padding:14px 14px 16px}
+  .card-info h3{font-size:15px}
+  .card-info .price{font-size:14px}
+  .card-add{opacity:1;transform:none;width:40px;height:40px;right:10px;bottom:auto;top:8px;background:transparent;border-color:var(--line2)}
+  .card.wide .card-media{aspect-ratio:16/11;padding:8% 12%}
+  .spot{padding:90px 0}
+  .spot-grid{grid-template-columns:minmax(0,1fr);gap:34px}
+  .spot-draw{margin:0 calc(var(--pad)*-1)}
+  .spot .btn{width:100%}
+  .princ{grid-template-columns:1fr}
+  .pr,.pr+.pr{padding:34px 0 38px;border-left:0;border-bottom:1px solid var(--line)}
+  .pr svg{height:120px;margin-bottom:22px}
+  .about{padding:90px 0}
+  .about-grid{grid-template-columns:minmax(0,1fr);gap:40px}
+  .about-l{position:static}
+  .portrait{max-width:none;aspect-ratio:9/10}
+  .quote{margin:40px 0}
+  .news-grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .news form{flex-wrap:wrap;border-bottom:0}
+  .news input{flex:1 1 100%;border-bottom:1px solid var(--ink);margin-bottom:14px}
+  .news form .btn{width:100%;height:54px!important}
+  .foot{grid-template-columns:minmax(0,1fr);gap:40px}
+  .foot-cols{grid-template-columns:1fr 1fr}
+  .foot-cols div:last-child{grid-column:span 2}
+  /* Produktvy som ark från botten */
+  .pv{padding:0;align-items:flex-end}
+  .pv-box{grid-template-columns:1fr;max-height:calc(100% - 40px - env(safe-area-inset-top,0px));overflow:auto;transform:translateY(100%);transition:opacity .3s,transform .55s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .pv-media{min-height:0;aspect-ratio:1/1;padding:12%}
+  .pv-info{overflow:visible;padding:24px var(--pad) 30px}
+  .pv-close{position:absolute;right:14px;top:14px;margin:0;background:var(--paper);z-index:3}
+  .pv-box{position:relative}
+  .grab{display:block!important}
+}
+.grab{display:none;position:absolute;top:8px;left:50%;width:40px;height:4px;margin-left:-20px;background:var(--line2);border-radius:2px;z-index:3}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .hero-draw .draw,.spot-draw .draw{stroke-dashoffset:0}
+  .rv{opacity:1;transform:none}
+}
+</style>
+<script>window.imgFb=function(i){ if(i.dataset.fb && i.getAttribute("src")!==i.dataset.fb){ i.src=i.dataset.fb; } else { var w=i.closest(".has-img"); if(w) w.classList.remove("has-img"); i.remove(); } };</script>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="head" id="head">
+  <div class="wrap head-in">
+    <a class="brand" href="#top" aria-label="dag.design, till startsidan">dag<span>.</span></a>
+    <nav class="nav" aria-label="Huvudmeny">
+      <a href="#kollektion">kollektion</a>
+      <a href="#principer">principer</a>
+      <a href="#om-dag">om dag</a>
+    </nav>
+    <div class="head-r">
+      <button class="cart-btn" id="cartBtn" aria-label="Öppna varukorg"><span class="t">varukorg</span><span class="cart-count" id="cartCount">0</span></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Öppna meny" aria-expanded="false" aria-controls="mmenu"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+<div class="mmenu" id="mmenu">
+  <ul>
+    <li><a href="#kollektion">kollektion <small>10 föremål</small></a></li>
+    <li><a href="#principer">principer <small>3</small></a></li>
+    <li><a href="#om-dag">om dag <small>arkitekt</small></a></li>
+  </ul>
+  <p class="mmenu-foot">Svensk designstudio av Dag Lindberg.</p>
+</div>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <h1><span><i>gravitation.</i></span><span><i>balans.</i></span><span><i>rörelse.</i></span></h1>
+    <div class="hero-draw" id="heroDraw">
+      <svg class="dwg" viewBox="0 0 600 450">
+        <!-- d1 skrivbord, perspektivlös fasad -->
+        <line class="gr late" x1="10" y1="380" x2="590" y2="380"/>
+        <g class="late"><path class="g" d="M30 380l-14 14M60 380l-14 14M90 380l-14 14M120 380l-14 14M150 380l-14 14M180 380l-14 14M210 380l-14 14M240 380l-14 14M270 380l-14 14M300 380l-14 14M330 380l-14 14M360 380l-14 14M390 380l-14 14M420 380l-14 14M450 380l-14 14M480 380l-14 14M510 380l-14 14M540 380l-14 14M570 380l-14 14"/></g>
+        <path class="o draw" d="M70 196H530V210H70Z"/>
+        <path class="o draw" d="M108 210V380H122V210"/>
+        <path class="o draw" d="M470 210L500 380M484 210L514 380"/>
+        <path class="o draw" d="M122 236H330V282H122"/>
+        <path class="h draw" d="M122 259H330M216 247v0"/>
+        <path class="o draw" d="M210 268h30"/>
+        <!-- mått -->
+        <g class="late">
+          <path class="m" d="M70 150V186M530 150V186M70 162H530M66 166l8-8M526 166l8-8"/>
+          <text class="mt" x="300" y="154" text-anchor="middle">d1</text>
+          <path class="m" d="M560 196H578M560 380H578M570 196V380M566 200l8-8M566 384l8-8"/>
+          <text class="mt" x="584" y="292" transform="rotate(90 584 292)" text-anchor="middle">skrivbord</text>
+        </g>
+      </svg>
+      <img class="ph" id="heroPh" src="https://dag.design/wp-content/uploads/2024/12/d1_gra_bakgrund.webp" data-fb="https://dag.design/wp-content/uploads/2024/12/d1_gra_bakgrund-300x300.webp" alt="d1 skrivbord" onerror="imgFb(this)">
+      <a class="hero-tag" href="#kollektion" data-open="d1"><span class="label">d1 skrivbord</span><b>31.000 kr</b></a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hero-foot">
+      <p>Hantverksmässiga möbler och inredningsdetaljer med fokus på estetik, funktion och kvalitet.</p>
+      <div class="hero-foot-r">
+        <a class="btn btn-solid" href="#kollektion">se kollektionen <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.3"/></svg></a>
+        <span class="scroll-cue label"><i></i>skrolla</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MANIFEST ========== -->
+<section class="manifest">
+  <div class="wrap manifest-row rv">
+    <span class="label">dag.design</span>
+    <p>Svensk designstudio av arkitekten Dag Lindberg. Idéer som grott vid sidan av uppdragen – nu formade till föremål för vardagen.</p>
+  </div>
+</section>
+
+<!-- ========== KOLLEKTION ========== -->
+<section id="kollektion">
+  <div class="wrap">
+    <div class="coll-head rv">
+      <h2>kollektion</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filtrera kollektionen"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ========== SPOTLIGHT ========== -->
+<section class="spot" id="spot">
+  <div class="wrap spot-grid">
+    <div class="spot-draw">
+      <span class="spot-corner" style="z-index:3">d2, skrivbord</span>
+      <div class="vt" role="group" aria-label="Visa som"><button aria-pressed="true" data-vt="foto">foto</button><button aria-pressed="false" data-vt="ritning">ritning</button></div>
+      <svg class="dwg" viewBox="0 0 500 400" id="spotSvg"></svg>
+      <img class="ph" src="https://dag.design/wp-content/uploads/2024/12/d2_skrivbord-1.webp" data-fb="https://dag.design/wp-content/uploads/2024/12/d2_skrivbord-1-300x300.webp" alt="d2 skrivbord" onerror="imgFb(this)">
+    </div>
+    <div class="rv">
+      <span class="label">i fokus</span>
+      <h2>d2</h2>
+      <p class="sub">skrivbord</p>
+      <p>Den största av pjäserna i kollektionen. Ett arbetsbord ritat med en arkitekts öga för proportion – där tyngd och bärighet får synas och balanseras.</p>
+      <div class="spot-meta">
+        <div><span class="label">pris</span><b>35.000 kr</b></div>
+        <div><span class="label">kategori</span><b>möbler</b></div>
+      </div>
+      <button class="btn btn-solid" data-open="d2">visa d2 <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.3"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRINCIPER ========== -->
+<section id="principer" style="padding-bottom:clamp(100px,13vw,190px)">
+  <div class="wrap">
+    <div class="coll-head rv"><h2>principer</h2></div>
+    <div class="princ" id="princ">
+      <div class="pr">
+        <svg viewBox="0 0 300 150" aria-hidden="true" class="dwg">
+          <line class="gr" x1="40" y1="130" x2="260" y2="130"/>
+          <path class="m" d="M150 30V112" stroke-dasharray="3 5"/>
+          <circle class="f ball" cx="150" cy="56" r="12"/>
+        </svg>
+        <h3>gravitation.</h3>
+        <p>Tyngden är en del av formen. Material får vila, bära och synas för vad de är.</p>
+      </div>
+      <div class="pr">
+        <svg viewBox="0 0 300 150" aria-hidden="true" class="dwg">
+          <path class="o" d="M150 100L138 130H162Z"/>
+          <line class="gr" x1="40" y1="130" x2="260" y2="130"/>
+          <g class="beam" style="transform:rotate(-9deg)">
+            <path class="o" d="M60 96H240V100H60Z"/>
+            <rect class="f" x="70" y="76" width="30" height="20"/>
+            <circle class="f" cx="220" cy="84" r="12"/>
+          </g>
+        </svg>
+        <h3>balans.</h3>
+        <p>Varje proportion prövas tills helheten vilar. Funktion och estetik väger lika.</p>
+      </div>
+      <div class="pr">
+        <svg viewBox="0 0 300 150" aria-hidden="true" class="dwg">
+          <line class="gr" x1="40" y1="130" x2="260" y2="130"/>
+          <path class="o wave" d="M40 100C80 100 90 40 150 40S220 100 260 100"/>
+          <path class="m" d="M40 112V120M260 112V120M40 116H260"/>
+        </svg>
+        <h3>rörelse.</h3>
+        <p>Föremål som används. Linjer som leder handen och ögat genom vardagen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== OM DAG ========== -->
+<section class="about" id="om-dag">
+  <div class="wrap about-grid">
+    <div class="about-l rv">
+      <span class="label">arkitekt & formgivare</span>
+      <h2>Dag<br>Lindberg</h2>
+      <div class="portrait" id="portrait">
+        <div class="portrait-empty">
+          <span class="label">sedan 1984</span>
+          <span class="sig">dag<span style="color:var(--blue)">.</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="about-r rv">
+      <p class="lead">Färg, form och hantverk var en självklar del i uppväxten.</p>
+      <p>Uppvuxen i en familj där vardagen kryddades med terpentindoft från pappas ateljé och den speciella lukten från mammas grafiska verkstad. Den stora matsalen med sitt enorma antika middagsbord fylldes med färska etsningar och litografier. Oljemålningar spreds ut över golven i det rymliga vardagsrummet och i ateljén.</p>
+      <p>Mitt eget rum fyllde jag från unga år med experiment och nermonterade elektriska apparater – allt skulle begripas och nya möjligheter till alternativa användningar undersökas.</p>
+      <blockquote class="quote">Mina händer blev bästa vänner och utförde varenda uppgift med bättre och bättre precision och känslighet.<cite>Dag Lindberg</cite></blockquote>
+      <p>Parallellt med arkitektyrket har arbetet med händer och en aldrig sinande ström av stora och små produktidéer levt ett eget liv i tysthet. 1984 grundade jag Lindberg Stenberg Arkitekter. Efter många år som ansvarig arkitekt och VD har jag nu tid att utveckla idéer som grott vid sidan av de ordinarie uppdragen.</p>
+      <div class="timeline">
+        <div><b>1984</b><span>Grundar Lindberg Stenberg Arkitekter</span></div>
+        <div><b>idag</b><span>dag.design – möbler och inredningsdetaljer</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== NYHETSBREV ========== -->
+<section class="news">
+  <div class="wrap news-grid rv">
+    <h2>nya föremål,<br>först till dig.</h2>
+    <div>
+      <form id="newsForm" novalidate>
+        <label class="label" for="newsEmail" style="position:absolute;left:-9999px">E-postadress</label>
+        <input id="newsEmail" type="email" placeholder="din e-postadress" autocomplete="email" required>
+        <button class="btn btn-solid" type="submit" style="height:48px">prenumerera</button>
+      </form>
+      <p class="news-msg" id="newsMsg" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <p class="foot-brand" aria-hidden="true">dag<span>.</span></p>
+      <div class="foot-cols">
+        <div><h4>kollektion</h4><ul id="footColl"></ul></div>
+        <div><h4>studio</h4><ul><li><a href="#om-dag">om dag</a></li><li><a href="#principer">principer</a></li><li><a href="#kollektion">alla föremål</a></li></ul></div>
+        <div><h4>dag.design</h4><ul><li style="color:var(--graphite)">Svensk designstudio av Dag Lindberg. Hantverksmässiga möbler och inredningsdetaljer.</li></ul></div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="year"></span> dag.design</span><span>gravitation. balans. rörelse.</span></div>
+  </div>
+</footer>
+
+<!-- ========== PRODUKTVY ========== -->
+<div class="overlay" id="overlay"></div>
+<div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvName">
+  <div class="pv-box">
+    <span class="grab" aria-hidden="true"></span>
+    <div class="pv-media" id="pvMedia"></div>
+    <div class="pv-info">
+      <button class="pv-close" id="pvClose" aria-label="Stäng"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.3"/></svg></button>
+      <span class="code" id="pvCode"></span>
+      <h3 id="pvName"></h3>
+      <p class="price" id="pvPrice"></p>
+      <p class="desc" id="pvDesc"></p>
+      <div class="variants" id="pvVar" role="group" aria-label="Välj storlek"></div>
+      <div class="buy" id="pvBuy">
+        <div class="qty"><button id="qMinus" aria-label="Minska antal">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Öka antal">+</button></div>
+        <button class="btn btn-solid" id="pvAdd">lägg i varukorg</button>
+      </div>
+      <div class="acc">
+        <details><summary>mått och material</summary><p id="pvSpec"></p></details>
+        <details><summary>tillverkning</summary><p>Varje föremål är formgivet av Dag Lindberg och tillverkat med fokus på hantverk och kvalitet.</p></details>
+        <details><summary>leverans och frågor</summary><p>Kontakta studion för leveranstid, beställning och specialönskemål.</p></details>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VARUKORG ========== -->
+<aside class="drawer" id="drawer" aria-label="Varukorg" aria-hidden="true">
+  <div class="dr-head"><h3>varukorg <span class="label" id="drCount"></span></h3><button class="pv-close" id="drClose" style="margin:0" aria-label="Stäng varukorg"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+  <div class="dr-list" id="drList"></div>
+  <div class="dr-foot" id="drFoot">
+    <div class="dr-sum"><span>summa</span><span id="drSum">0 kr</span></div>
+    <span class="label">Inklusive moms. Frakt beräknas i kassan.</span>
+    <button class="btn btn-solid" id="checkout">till kassan</button>
+    <p class="dr-note" id="drNote" role="status"></p>
+  </div>
+</aside>
+
+<script>
+(function(){
+  /* ============================================================
+     PRODUKTER – byt/lägg till bild i "img" så ersätts ritningen.
+     I Shopify: hämtas från produktdatan.
+     ============================================================ */
+  const UP="https://dag.design/wp-content/uploads/";
+  const PRODUCTS = [
+    {id:"d1", name:"skrivbord", cat:"möbler", price:31000, img:"2024/12/d1_gra_bakgrund.webp", fb:"-300x300", wide:true, desc:"Retroinspirerat skrivbord med en bärande sida och ett lätt, lutande ben – en studie i balans mellan tyngd och rörelse."},
+    {id:"d2", name:"skrivbord", cat:"möbler", price:35000, img:"2024/12/d2_skrivbord-1.webp", fb:"-300x300", desc:"Skrivbord i trä. Den största pjäsen i kollektionen, ritad med arkitektens öga för proportion."},
+    {id:"d3", name:"sängbord", cat:"möbler", price:6800, img:"2024/12/d3-sangbord_11.png", fb:"-300x300", contain:true, desc:"Nattduksbord för sängens sida, med plats för det man vill ha nära."},
+    {id:"t1", name:"soffbord", cat:"möbler", price:9950, img:"2024/12/86.B_2000.jpeg", fb:"-300x300", desc:"Lågt soffbord med lugna proportioner, ritat för vardagsrummets mitt."},
+    {id:"t2", name:"coffee table", cat:"möbler", price:11950, img:"2024/12/t2-coffee-table_11.png", fb:"-300x300", contain:true, desc:"Soffbord som vilar på en central bärande form."},
+    {id:"m1", name:"spegel", cat:"vägg", price:7600, img:"2024/12/Spegelinstagram.jpeg", fb:"-300x300", desc:"Spegel i trä med mjukt rundade hörn."},
+    {id:"s1", name:"spine", sub:"vägghylla", cat:"vägg", price:8200, img:"2024/12/s1-spine_11.png", fb:"-300x300", contain:true, wide:true, desc:"Väggmonterad hylla uppbyggd kring en ryggrad – hyllplanen växlar sida som kotor längs en stam."},
+    {id:"cb1", name:"skärbräda", cat:"kök", price:1950, img:"2025/02/Skarbrada2_11.png", fb:"-600x600", contain:true, desc:"Handgjord skärbräda i massiv valnöt med grepplister i lönn – en kontrast mellan ljusa och mörka träslag.", spec:"Längd ca 400 mm, bredd ca 300 mm, höjd ca 30 mm. Massiv valnöt med grepplister av lönn. Behandlad med paraffinolja och polerad med bivax. Måtten kan variera beroende på tillgången på förstklassigt virke – du får bild och mått på din bräda för godkännande inför leverans."},
+    {id:"cb2", name:"ostbricka", cat:"kök", price:950, from:true, img:"2026/03/compressed_IMG_2534.webp", fb:"-600x600", desc:"Ostbricka i massiv valnöt med grepplister i lönn. Finns i tre storlekar.",
+      variants:[{n:"liten, 12×34 cm",p:950},{n:"medium, 15×40 cm",p:1100},{n:"stor, 18×50 cm",p:1250}],
+      spec:"Tjocklek valnöt ca 15 mm, max höjd vid grepp ca 25 mm. Massiv valnöt med grepplister av lönn. Behandlad med paraffinolja och polerad med bivax. Måtten kan variera beroende på tillgången på förstklassigt virke – du får bild och mått för godkännande inför leverans."},
+    {id:"lj1", name:"adventsljusstake", cat:"ljus", price:null, img:"2024/12/5.Trio2_.jpg", fb:"-300x300", desc:"Adventsljusstake i trä för fyra ljus."}
+  ];
+  const PORTRAIT = "https://dag.design/wp-content/uploads/2026/06/Dag-Lindberg_fotografi-1-1846x2048.jpg"; // lägg in URL till porträtt av Dag här
+
+  /* ---------- Ritningar (fasader med måttlinjer) ---------- */
+  const G = '<line class="gr" x1="20" y1="330" x2="380" y2="330"/>';
+  const M = (x1,x2,y,t)=>`<path class="m" d="M${x1} ${y-10}V${y+10}M${x2} ${y-10}V${y+10}M${x1} ${y}H${x2}M${x1-4} ${y+4}l8-8M${x2-4} ${y+4}l8-8"/><text class="mt" x="${(x1+x2)/2}" y="${y-6}" text-anchor="middle">${t}</text>`;
+  const DWG = {
+    d1:`${G}<path class="o" d="M50 170H350V180H50Z"/><path class="o" d="M76 180V330H86V180"/><path class="o" d="M310 180L330 330M320 180L340 330"/><path class="o" d="M86 196H220V230H86"/><path class="o" d="M140 214h26"/>${M(50,350,140,"d1")}`,
+    d2:`${G}<path class="o" d="M36 160H364V172H36Z"/><path class="o" d="M60 172V330M70 172V330M330 172V330M340 172V330"/><path class="o" d="M220 172V222H330M220 197H330"/><path class="o" d="M262 186h26M262 211h26"/><path class="h" d="M70 300H330"/>${M(36,364,130,"d2")}`,
+    d3:`${G}<path class="o" d="M130 200H270V270H130Z"/><path class="o" d="M130 235H270"/><path class="o" d="M186 252h28"/><path class="o" d="M142 270L136 330M258 270L264 330"/>${M(130,270,172,"d3")}`,
+    t1:`${G}<path class="o" d="M50 250H350V262H50Z"/><path class="o" d="M70 262V330M80 262V330M320 262V330M330 262V330"/><path class="h" d="M80 312H320"/>${M(50,350,222,"t1")}`,
+    t2:`${G}<path class="o" d="M80 240C80 232 320 232 320 240V252C320 260 80 260 80 252Z"/><path class="o" d="M170 258L186 330M230 258L214 330"/><path class="h" d="M150 330H250"/>${M(80,320,208,"t2")}`,
+    m1:`${G}<path class="o" d="M150 40H250A30 30 0 0 1 280 70V300A30 30 0 0 1 250 330H150A30 30 0 0 1 120 300V70A30 30 0 0 1 150 40Z" transform="rotate(-6 200 330)"/><path class="h" d="M150 120L210 70M150 160L240 84M180 180L250 122" transform="rotate(-6 200 330)"/><path class="g" d="M320 30V330"/>${M(120,280,20,"m1")}`,
+    s1:`<path class="g" d="M60 20V340M60 40l-12 12M60 80l-12 12M60 120l-12 12M60 160l-12 12M60 200l-12 12M60 240l-12 12M60 280l-12 12M60 320l-12 12"/><path class="o" d="M196 40H206V320H196Z"/><path class="o" d="M206 80H320V88H206M80 130H196V138H80M206 180H320V188H206M80 230H196V238H80M206 280H320V288H206"/><path class="g" d="M60 180H80" stroke-dasharray="3 4"/>${M(80,320,20,"s1")}`,
+    cb1:`<path class="o" d="M70 150H300A20 20 0 0 1 320 170V240A20 20 0 0 1 300 260H70A20 20 0 0 1 50 240V170A20 20 0 0 1 70 150Z"/><path class="o" d="M320 190H350A15 15 0 0 1 350 220H320"/><circle class="o" cx="344" cy="205" r="5"/><path class="h" d="M70 175C130 170 200 184 300 176M66 200C140 196 210 212 304 202M70 228C150 224 230 238 300 230"/>${M(50,350,120,"cb1")}`,
+    cb2:`<circle class="o" cx="190" cy="200" r="110"/><circle class="h" cx="190" cy="200" r="96"/><path class="o" d="M300 190H340A10 10 0 0 1 340 210H300"/><path class="h" d="M120 150C170 140 220 160 260 150M110 200C170 190 230 210 280 200M120 250C170 240 220 262 260 252"/>${M(80,350,62,"cb2")}`,
+    lj1:`${G}<path class="o" d="M60 300H340V330H60Z"/><path class="o" d="M90 300V240H120V300M150 300V210H180V300M220 300V180H250V300M280 300V150H310V300"/><path class="o" d="M105 240V230M165 210V200M235 180V170M295 150V140"/><path class="h" d="M295 128C300 118 290 112 295 104M235 158C240 148 230 142 235 134"/>${M(60,340,112,"lj1")}`
+  };
+  const svg = (id, extra="") => `<svg class="dwg" viewBox="0 0 400 360" ${extra}>${DWG[id]||""}</svg>`;
+  const fbUrl = p => UP+p.img.replace(/(\.\w+)$/, p.fb+"$1");
+  const photo = p => p.img ? `<img class="ph${p.contain?" contain":""}" src="${UP+p.img}" data-fb="${fbUrl(p)}" alt="${p.id} ${p.name}" loading="lazy" onerror="imgFb(this)">` : "";
+  const media = p => svg(p.id,'aria-hidden="true"') + photo(p);
+  const kr = n => n==null ? "pris på förfrågan" : n.toLocaleString("sv-SE").replace(/\s/g,".")+" kr";
+  const priceTxt = p => (p.from?"från ":"")+kr(p.price);
+  const byId = id => PRODUCTS.find(p=>p.id===id);
+
+  /* ---------- Kollektion ---------- */
+  const grid=document.getElementById("grid"), filters=document.getElementById("filters");
+  grid.innerHTML = PRODUCTS.map(p=>`
+    <article class="card${p.wide?" wide":""}" data-cat="${p.cat}">
+      <button class="card-open" data-open="${p.id}" aria-label="Visa ${p.id} ${p.name}">
+        <div class="card-media${p.img?" has-img":""}">${media(p)}<span class="card-code">${p.id}</span><span class="card-view">visa</span></div>
+        <div class="card-info"><h3>${p.name}${p.sub?` <span class="label">${p.sub}</span>`:""}</h3><span class="price">${priceTxt(p)}</span></div>
+      </button>
+      ${p.price!=null&&!p.variants?`<button class="card-add" data-add="${p.id}" aria-label="Lägg ${p.id} ${p.name} i varukorg"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0v14M0 7h14" stroke="currentColor" stroke-width="1.3"/></svg></button>`:""}
+    </article>`).join("");
+
+  const cats=["alla",...new Set(PRODUCTS.map(p=>p.cat))];
+  filters.innerHTML=cats.map((c,i)=>`<button class="filter" aria-pressed="${i===0}" data-cat="${c}">${c}<sup>${c==="alla"?PRODUCTS.length:PRODUCTS.filter(p=>p.cat===c).length}</sup></button>`).join("");
+  filters.addEventListener("click",e=>{
+    const b=e.target.closest(".filter"); if(!b) return;
+    [...filters.children].forEach(f=>f.setAttribute("aria-pressed",f===b));
+    const c=b.dataset.cat;
+    grid.querySelectorAll(".card").forEach(card=>{
+      const show=c==="alla"||card.dataset.cat===c;
+      card.classList.toggle("hide",!show);
+      card.classList.toggle("wide", show && c==="alla" && byId(card.querySelector("[data-open]").dataset.open).wide);
+    });
+  });
+  document.getElementById("footColl").innerHTML=PRODUCTS.slice(0,6).map(p=>`<li><a href="#kollektion" data-open="${p.id}">${p.id} ${p.name}</a></li>`).join("");
+
+  /* ---------- Spotlight-ritning ---------- */
+  document.getElementById("spotSvg").innerHTML=`
+    <line class="gr" x1="10" y1="340" x2="490" y2="340"/>
+    <path class="o draw" d="M40 150H460V164H40Z"/>
+    <path class="o draw" d="M70 164V340M82 164V340M418 164V340M430 164V340"/>
+    <path class="o draw" d="M280 164V230H418M280 197H418"/>
+    <path class="o draw" d="M334 180h34M334 213h34"/>
+    <path class="h draw" d="M82 306H418"/>
+    <path class="m" d="M40 110V140M460 110V140M40 122H460M36 126l8-8M456 126l8-8"/>
+    <text class="mt" x="250" y="114" text-anchor="middle">d2</text>
+    <path class="m" d="M20 150V340M12 150H28M12 340H28M16 154l8-8M16 344l8-8"/>
+    <path class="m" d="M280 250V270M418 250V270M280 260H418M276 264l8-8M414 264l8-8"/>
+    <text class="mt" x="349" y="254" text-anchor="middle">låda</text>`;
+
+  /* ---------- Porträtt ---------- */
+  if(PORTRAIT){ const pt=document.getElementById("portrait"); const im=new Image(); im.alt="Porträtt av Dag Lindberg"; im.onload=()=>{ pt.innerHTML=""; pt.appendChild(im); pt.classList.add("has-photo"); }; im.src=PORTRAIT; }
+
+  /* ---------- Varukorg ---------- */
+  let cart={};
+  try{ cart=JSON.parse(localStorage.getItem("dagCart")||"{}")||{}; }catch(e){ cart={}; }
+  const save=()=>{ try{ localStorage.setItem("dagCart",JSON.stringify(cart)); }catch(e){} };
+  const cCount=document.getElementById("cartCount"), drList=document.getElementById("drList"), drSum=document.getElementById("drSum"), drFoot=document.getElementById("drFoot"), drCount=document.getElementById("drCount");
+  function renderCart(bump){
+    const ids=Object.keys(cart).filter(k=>byId(k.split(":")[0]));
+    const n=ids.reduce((a,id)=>a+cart[id],0);
+    cCount.textContent=n; cCount.classList.toggle("has",n>0);
+    if(bump){ cCount.classList.remove("bump"); void cCount.offsetWidth; cCount.classList.add("bump"); }
+    drCount.textContent=n?`(${n})`:"";
+    if(!ids.length){
+      drList.innerHTML=`<div class="dr-empty"><p>Varukorgen är tom.</p><a class="btn btn-line" href="#kollektion" data-close-drawer>se kollektionen</a></div>`;
+      drFoot.style.display="none"; return;
+    }
+    drFoot.style.display="";
+    const unit=k=>{const [id,v]=k.split(":");const p=byId(id);return v!=null&&p.variants?p.variants[+v].p:p.price;};
+    drList.innerHTML=ids.map(id=>{const [pid,v]=id.split(":");const p=byId(pid); return `
+      <div class="dr-item">
+        <div class="dr-thumb${p.img?" has-img":""}">${media(p)}</div>
+        <div><h4>${p.id} ${p.name}</h4><span class="label">${v!=null&&p.variants?p.variants[+v].n+", ":""}${kr(unit(id))}</span>
+          <div class="dr-qty"><button data-dec="${id}" aria-label="Minska">−</button><span>${cart[id]}</span><button data-inc="${id}" aria-label="Öka">+</button></div>
+          <button class="dr-rm" data-rm="${id}">ta bort</button></div>
+        <span class="dr-price">${kr(unit(id)*cart[id])}</span>
+      </div>`}).join("");
+    drSum.textContent=kr(ids.reduce((a,id)=>a+unit(id)*cart[id],0));
+  }
+  function add(id,q=1){ cart[id]=(cart[id]||0)+q; save(); renderCart(true); }
+  drList.addEventListener("click",e=>{
+    const t=e.target.closest("button,a"); if(!t) return;
+    if(t.dataset.inc){cart[t.dataset.inc]++;}
+    else if(t.dataset.dec){cart[t.dataset.dec]--; if(cart[t.dataset.dec]<1) delete cart[t.dataset.dec];}
+    else if(t.dataset.rm){delete cart[t.dataset.rm];}
+    else if(t.hasAttribute("data-close-drawer")){closeDrawer(); return;}
+    save(); renderCart();
+  });
+  document.getElementById("checkout").addEventListener("click",()=>{ document.getElementById("drNote").textContent="Kassan kopplas till Shopify vid lansering."; });
+
+  /* ---------- Paneler ---------- */
+  const overlay=document.getElementById("overlay"), pv=document.getElementById("pv"), drawer=document.getElementById("drawer");
+  let lastFocus=null, current=null, qty=1, vIdx=0;
+  const lock=on=>{ document.body.style.overflow=on?"hidden":""; overlay.classList.toggle("on",on); };
+  function openPV(id){
+    const p=byId(id); if(!p) return; current=p; qty=1;
+    lastFocus=document.activeElement;
+    const pm=document.getElementById("pvMedia");
+    pm.className="pv-media"+(p.img?" has-img":"");
+    pm.innerHTML=`<span class="label" style="z-index:3">${p.cat}</span>`+media(p)+(p.img?`<div class="vt" role="group" aria-label="Visa som"><button aria-pressed="true" data-vt="foto">foto</button><button aria-pressed="false" data-vt="ritning">ritning</button></div>`:"");
+    vIdx=0;
+    const pvVar=document.getElementById("pvVar");
+    pvVar.innerHTML=p.variants?p.variants.map((v,i)=>`<button class="variant" aria-pressed="${i===0}" data-v="${i}"><span>${v.n}</span><span>${kr(v.p)}</span></button>`).join(""):"";
+    pvVar.style.display=p.variants?"":"none";
+    document.getElementById("pvCode").textContent=p.id;
+    document.getElementById("pvName").textContent=p.name;
+    document.getElementById("pvPrice").textContent=p.variants?kr(p.variants[0].p):kr(p.price);
+    document.getElementById("pvDesc").textContent=p.desc;
+    document.getElementById("pvSpec").textContent=p.spec||"Mått och materialval anges per produkt. Kontakta studion för detaljer.";
+    document.getElementById("qVal").textContent=1;
+    const addB=document.getElementById("pvAdd");
+    addB.textContent=p.price==null?"fråga om pris":"lägg i varukorg";
+    document.querySelector("#pvBuy .qty").style.display=p.price==null?"none":"";
+    pv.classList.add("on"); lock(true);
+    setTimeout(()=>document.getElementById("pvClose").focus(),50);
+  }
+  function closePV(){ pv.classList.remove("on"); if(!drawer.classList.contains("on")) lock(false); if(lastFocus) lastFocus.focus(); }
+  function openDrawer(){ closePV(); lastFocus=document.activeElement; drawer.classList.add("on"); drawer.setAttribute("aria-hidden","false"); lock(true); document.getElementById("drNote").textContent=""; setTimeout(()=>document.getElementById("drClose").focus(),50); }
+  function closeDrawer(){ drawer.classList.remove("on"); drawer.setAttribute("aria-hidden","true"); lock(false); if(lastFocus) lastFocus.focus(); }
+
+  document.getElementById("qMinus").onclick=()=>{ qty=Math.max(1,qty-1); document.getElementById("qVal").textContent=qty; };
+  document.getElementById("qPlus").onclick=()=>{ qty++; document.getElementById("qVal").textContent=qty; };
+  document.getElementById("pvAdd").onclick=()=>{
+    if(current.price==null){ document.getElementById("pvDesc").textContent=current.desc+" Priset lämnas på förfrågan – kontakta studion."; return; }
+    add(current.variants?current.id+":"+vIdx:current.id,qty); openDrawer();
+  };
+  document.getElementById("pvVar").addEventListener("click",e=>{
+    const b=e.target.closest(".variant"); if(!b) return; vIdx=+b.dataset.v;
+    [...b.parentNode.children].forEach(x=>x.setAttribute("aria-pressed",x===b));
+    document.getElementById("pvPrice").textContent=kr(current.variants[vIdx].p);
+  });
+  // Foto / ritning-växlare
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("[data-vt]"); if(!b) return;
+    const wrap=b.closest(".spot-draw,.pv-media"); const dwg=b.dataset.vt==="ritning";
+    wrap.classList.toggle("show-dwg",dwg);
+    [...b.parentNode.children].forEach(x=>x.setAttribute("aria-pressed",x===b));
+  });
+  document.getElementById("pvClose").onclick=closePV;
+  document.getElementById("drClose").onclick=closeDrawer;
+  document.getElementById("cartBtn").onclick=openDrawer;
+  overlay.onclick=()=>{ closePV(); closeDrawer(); };
+  pv.addEventListener("click",e=>{ if(e.target===pv) closePV(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(pv.classList.contains("on")) closePV(); else if(drawer.classList.contains("on")) closeDrawer(); else setMenu(false); } });
+
+  // Svep ner för att stänga produktvyn på mobil
+  const box=pv.querySelector(".pv-box"); let sy=null;
+  box.addEventListener("touchstart",e=>{ sy=box.scrollTop<=0?e.touches[0].clientY:null; },{passive:true});
+  box.addEventListener("touchend",e=>{ if(sy!=null && e.changedTouches[0].clientY-sy>90) closePV(); sy=null; });
+
+  document.addEventListener("click",e=>{
+    const o=e.target.closest("[data-open]");
+    if(o){ e.preventDefault(); setMenu(false); openPV(o.dataset.open); return; }
+    const a=e.target.closest("[data-add]");
+    if(a){ add(a.dataset.add); a.classList.add("done"); a.innerHTML='<svg width="14" height="12" viewBox="0 0 14 12"><path d="M1 6l4 4 8-9" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>'; setTimeout(()=>{ a.classList.remove("done"); a.innerHTML='<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0v14M0 7h14" stroke="currentColor" stroke-width="1.3"/></svg>'; },1400); }
+  });
+  renderCart();
+
+  /* ---------- Nyhetsbrev ---------- */
+  document.getElementById("newsForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    const v=document.getElementById("newsEmail").value.trim(), m=document.getElementById("newsMsg");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ m.textContent="Skriv en giltig e-postadress, t.ex. namn@exempel.se."; return; }
+    m.textContent="Tack. Du får nyheter från studion när nya föremål släpps."; e.target.reset();
+  });
+
+  /* ---------- Header + meny ---------- */
+  const head=document.getElementById("head"), menuBtn=document.getElementById("menuBtn");
+  const onScroll=()=>head.classList.toggle("scrolled",window.scrollY>30||document.body.classList.contains("menu-open"));
+  window.addEventListener("scroll",()=>requestAnimationFrame(onScroll),{passive:true}); onScroll();
+  function setMenu(on){ document.body.classList.toggle("menu-open",on); menuBtn.setAttribute("aria-expanded",on); menuBtn.setAttribute("aria-label",on?"Stäng meny":"Öppna meny"); if(!pv.classList.contains("on")&&!drawer.classList.contains("on")) document.body.style.overflow=on?"hidden":""; onScroll(); }
+  menuBtn.onclick=()=>setMenu(!document.body.classList.contains("menu-open"));
+  document.querySelectorAll("#mmenu a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+  document.getElementById("year").textContent=new Date().getFullYear();
+
+  /* ---------- Hero: ritningen blir föremål ---------- */
+  const hd=document.getElementById("heroDraw"), hp=document.getElementById("heroPh");
+  const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const showPhoto=()=>{ if(document.getElementById("heroPh")) hd.classList.add("photo"); };
+  if(hp.complete && hp.naturalWidth) setTimeout(showPhoto, reduce?0:2900);
+  else hp.addEventListener("load",()=>setTimeout(showPhoto, reduce?0:Math.max(0,2900-performance.now())),{once:true});
+
+  /* ---------- Intoning ---------- */
+  const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }),{rootMargin:"0px 0px -12% 0px"});
+  document.querySelectorAll(".rv,#spot,#princ").forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
